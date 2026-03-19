@@ -1,0 +1,50 @@
+name: full-project-development
+description: 完整项目开发流程 — 从需求到交付的全链路 Agent 协作（TDD 驱动）
+
+phases:
+  - id: requirements
+    label: "Phase 1: 需求分析"
+    agents: [product-manager]
+    parallel: false
+    produces: [docs/prd.md]
+    review: true
+
+  - id: design
+    label: "Phase 2: 架构与UI设计"
+    agents: [tech-architect, ui-designer]
+    parallel: true
+    depends_on: [requirements]
+    produces: [docs/architecture.md, src/components/]
+    review: true
+
+  - id: test-design
+    label: "Phase 3: 测试用例设计（TDD - Red）"
+    agents: [test-expert]
+    parallel: false
+    depends_on: [design]
+    produces: [tests/]
+    review: true
+
+  - id: implementation
+    label: "Phase 4: 前后端实现（TDD - Green）"
+    agents: [frontend-expert, backend-architect]
+    parallel: true
+    depends_on: [test-design]
+    produces: [src/, docs/api-design.md]
+    review: true
+
+  - id: test-verify
+    label: "Phase 5: 测试验证与重构（TDD - Refactor）"
+    agents: [test-expert]
+    parallel: false
+    depends_on: [implementation]
+    produces: [tests/, docs/test-report.md]
+    review: true
+
+  - id: review
+    label: "Phase 6: 项目总结"
+    agents: [project-manager]
+    parallel: false
+    depends_on: [test-verify]
+    produces: [docs/progress-report.md]
+    review: false
