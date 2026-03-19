@@ -2,6 +2,11 @@
 
 执行 Pipeline 时，按阶段使用以下 prompt 调度对应 Agent。
 
+## 全局约束（所有 Agent 必须遵守）
+
+- **样式方案：Tailwind CSS first**。所有 UI 组件必须使用 Tailwind utility class 编写样式，禁止使用 CSS Modules、styled-components、Emotion 或其他 CSS-in-JS / 模块化 CSS 方案。全局样式入口为 `src/index.css`（`@import "tailwindcss"`），通过 `@tailwindcss/vite` 插件集成。
+- **包管理：pnpm**。所有安装/运行命令使用 `pnpm`。
+
 ## Phase 1: 需求分析
 
 **Agent**: `product-manager`
@@ -27,12 +32,14 @@
 请阅读 docs/prd.md，完成技术架构设计，输出到 docs/architecture.md。
 重要：需要根据项目需求判断架构模式（A 一体化全栈 / B 前后端分离 / C 纯前端），
 并在文档第一章明确标注，后续所有 Agent 将据此调整工作方式。
+样式方案必须使用 Tailwind CSS（通过 @tailwindcss/vite 集成），禁止使用 CSS Modules 或其他模块化 CSS 方案。
 ```
 
 **Agent 2** - `ui-designer`:
 ```
 请阅读 docs/prd.md，设计并产出 UI 组件原型代码，输出到 src/components/ 目录。
 如果 docs/architecture.md 已生成，请遵循其技术选型和目录结构约定。
+样式必须使用 Tailwind CSS utility class，禁止使用 CSS Modules 或其他模块化 CSS 方案。
 ```
 
 **评审** — `project-manager`: 评审 Phase 2 产出。
@@ -63,6 +70,7 @@
 先阅读 tests/ 下的测试用例，理解期望的接口和行为。
 再阅读 docs/prd.md、docs/architecture.md，审查 src/components/ 下的 UI 组件。
 你的目标是：实现代码使测试通过。按测试中 import 的路径创建对应模块。
+样式必须使用 Tailwind CSS utility class，禁止使用 CSS Modules 或其他模块化 CSS 方案。
 完成后运行 pnpm exec vitest run 验证。
 ```
 
