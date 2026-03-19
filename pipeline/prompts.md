@@ -63,7 +63,7 @@
 先阅读 tests/ 下的测试用例，理解期望的接口和行为。
 再阅读 docs/prd.md、docs/architecture.md，审查 src/components/ 下的 UI 组件。
 你的目标是：实现代码使测试通过。按测试中 import 的路径创建对应模块。
-完成后运行 npx vitest run 验证。
+完成后运行 pnpm exec vitest run 验证。
 ```
 
 **Agent 2** - `backend-architect`:
@@ -83,19 +83,32 @@
 ```
 请以 TDD Refactor Phase 模式工作。
 更新 tests/ 下的测试骨架，替换 TODO 占位为真实断言。
-运行 npx vitest run，分析测试结果。
+运行 pnpm exec vitest run，分析测试结果。
 补充边界用例和集成测试。
 产出测试报告到 docs/test-report.md。
 ```
 
 **评审** — `project-manager`: 评审 Phase 5 产出。
 
-## Phase 6: 项目总结
+## Phase 6: 代码审查
+
+**Agent**: `code-reviewer`
+
+```
+请审查 src/ 下所有代码文件。
+阅读 docs/architecture.md 了解架构模式和技术选型。
+从安全漏洞、编码规范、性能风险、代码异味四个维度进行审查。
+产出审查报告到 docs/code-review.md，Critical 问题需附修复代码示例。
+```
+
+**评审** — `project-manager`: 评审 Phase 6 产出。如有 Critical 问题，标记 NEEDS_REVISION。
+
+## Phase 7: 项目总结
 
 **Agent**: `project-manager`
 
 ```
 所有阶段已完成。请进行全局检查，产出最终项目进度报告到 docs/progress-report.md。
 包含各阶段回顾、TDD 执行情况（Red→Green→Refactor 各阶段测试通过率）、
-产出清单、质量总评和后续建议。
+代码审查结果摘要、产出清单、质量总评和后续建议。
 ```

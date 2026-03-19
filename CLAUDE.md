@@ -1,6 +1,6 @@
 # Multi-Agent 调度系统
 
-基于 Claude Code sub-agent 机制的多 Agent 协作调度系统。用户输入项目需求后，按 Pipeline 自动编排 7 个专业 Agent 协作完成开发。
+基于 Claude Code sub-agent 机制的多 Agent 协作调度系统。用户输入项目需求后，按 Pipeline 自动编排 8 个专业 Agent 协作完成开发。
 
 ## 调度协议
 
@@ -19,6 +19,7 @@ Agent 调用时使用 `subagent_type: "general-purpose"` 并在 prompt 中指定
 
 - **TDD 驱动**: Red → Green → Refactor。测试先于实现，开发者以通过测试为目标编写代码
 - **架构模式自适应**: tech-architect 在 Phase 2 判断架构模式（A 一体化全栈 / B 前后端分离 / C 纯前端），写入 `docs/architecture.md` 第一章，后续 Agent 据此调整工作方式
+- **包管理**: 使用 pnpm。所有 Agent 执行安装/运行命令时使用 `pnpm` 而非 npm/yarn（如 `pnpm install`、`pnpm run dev`、`pnpm exec vitest`）
 
 ## Artifact 传递
 
@@ -32,6 +33,7 @@ Agent 之间通过文件系统传递 artifact：
 | API 设计 | `docs/api-design.md` | backend-architect | frontend-expert, test-expert |
 | 前端代码 | `src/` | frontend-expert | test-expert |
 | 测试文件 | `tests/` | test-expert | frontend-expert, project-manager |
+| 代码审查 | `docs/code-review.md` | code-reviewer | project-manager |
 | 进度报告 | `docs/progress-report.md` | project-manager | 用户 |
 
 ## 变更追踪

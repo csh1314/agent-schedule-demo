@@ -41,10 +41,18 @@ phases:
     produces: [tests/, docs/test-report.md]
     review: true
 
-  - id: review
-    label: "Phase 6: 项目总结"
-    agents: [project-manager]
+  - id: code-review
+    label: "Phase 6: 代码审查"
+    agents: [code-reviewer]
     parallel: false
     depends_on: [test-verify]
+    produces: [docs/code-review.md]
+    review: true
+
+  - id: review
+    label: "Phase 7: 项目总结"
+    agents: [project-manager]
+    parallel: false
+    depends_on: [code-review]
     produces: [docs/progress-report.md]
     review: false

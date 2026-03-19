@@ -1,6 +1,6 @@
 # Multi-Agent Schedule Demo
 
-基于 Claude Code sub-agent 机制的多 Agent 协作调度系统。输入需求，自动按 TDD Pipeline 编排 7 个 Agent 完成项目开发。
+基于 Claude Code sub-agent 机制的多 Agent 协作调度系统。输入需求，自动按 TDD Pipeline 编排 8 个 Agent 完成项目开发。
 
 ## 架构
 
@@ -8,7 +8,7 @@
 CLAUDE.md (调度入口)
   ├── pipeline/pipeline.yaml  (阶段定义 + 依赖)
   ├── pipeline/prompts.md     (各阶段 prompt 模板)
-  └── .claude/agents/*.md     (7 个 Agent 定义)
+  └── .claude/agents/*.md     (8 个 Agent 定义)
 ```
 
 ## Pipeline
@@ -56,11 +56,18 @@ graph TD
     P5 -->|tests/ + 报告| R5{PM 评审}
     R5 --> P6
 
-    subgraph "Phase 6"
-        P6[project-manager]
+    subgraph "Phase 6 · 代码审查"
+        P6[code-reviewer]
     end
 
-    P6 -->|docs/progress-report.md| Done([交付])
+    P6 -->|docs/code-review.md| R6{PM 评审}
+    R6 --> P7
+
+    subgraph "Phase 7"
+        P7[project-manager]
+    end
+
+    P7 -->|docs/progress-report.md| Done([交付])
 ```
 
 > `PM 评审` = project-manager agent 阶段评审，NEEDS_REVISION 时重新调度（最多 1 次）
