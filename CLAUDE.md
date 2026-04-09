@@ -13,7 +13,7 @@
 5. 评审 NEEDS_REVISION 时重新调度对应 Agent（最多重试 1 次）
 6. 全部完成后向用户汇报产出清单和关键指标
 
-Agent 调用时使用 `subagent_type: "general-purpose"` 并在 prompt 中指定角色。
+Agent 调用时使用 `subagent_type: "general-purpose"` 并在 prompt 中指定角色。唯一例外是 `code-reviewer`，使用 `.claude/agents/code-reviewer.md` 配置文件实现只读权限隔离（tools 仅含 Glob, Grep, Read）。
 
 ## 开发原则
 

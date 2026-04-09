@@ -5,8 +5,6 @@ tools:
   - Glob
   - Grep
   - Read
-  - Edit
-  - Write
 ---
 
 # 角色定义
