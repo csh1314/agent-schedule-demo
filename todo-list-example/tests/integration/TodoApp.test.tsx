@@ -1,6 +1,51 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
+
+// Mock framer-motion so AnimatePresence removes children immediately
+// and motion.* elements render as plain HTML elements
+vi.mock('framer-motion', async () => {
+  const React = await import('react');
+
+  const createMotionProxy = () => {
+    const cache = new Map();
+    return new Proxy(
+      {},
+      {
+        get: (_target, prop: string) => {
+          if (!cache.has(prop)) {
+            cache.set(
+              prop,
+              React.forwardRef((props: Record<string, unknown>, ref) => {
+                const {
+                  initial,
+                  animate,
+                  exit,
+                  variants,
+                  transition,
+                  whileHover,
+                  whileTap,
+                  layout,
+                  onAnimationComplete,
+                  ...rest
+                } = props;
+                return React.createElement(prop, { ...rest, ref });
+              })
+            );
+          }
+          return cache.get(prop);
+        },
+      }
+    );
+  };
+
+  return {
+    motion: createMotionProxy(),
+    AnimatePresence: ({ children }: { children: React.ReactNode }) =>
+      React.createElement(React.Fragment, null, children),
+  };
+});
+
 import App from '../../src/App';
 
 // Mock localStorage

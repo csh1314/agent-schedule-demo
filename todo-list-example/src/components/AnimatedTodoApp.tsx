@@ -1,13 +1,20 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useTodos } from './hooks/useTodos';
-import AnimatedTodoInput from './components/AnimatedTodoInput';
-import AnimatedTodoList from './components/AnimatedTodoList';
-import AnimatedFilter from './components/AnimatedFilter';
-import AnimatedCounter from './components/AnimatedCounter';
-import type { FilterType } from './components/types';
+import { useTodos } from '../hooks/useTodos';
+import AnimatedTodoInput from './AnimatedTodoInput';
+import AnimatedTodoList from './AnimatedTodoList';
+import AnimatedFilter from './AnimatedFilter';
+import AnimatedCounter from './AnimatedCounter';
+import type { FilterType } from './types';
 
-const App: React.FC = () => {
+export interface AnimatedTodoAppProps {
+  /** Additional className for the outermost container */
+  className?: string;
+}
+
+const AnimatedTodoApp: React.FC<AnimatedTodoAppProps> = ({
+  className = '',
+}) => {
   const {
     filteredTodos,
     filter,
@@ -22,6 +29,7 @@ const App: React.FC = () => {
     typeof window !== 'undefined' &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // Stagger children for page entrance animation
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -52,8 +60,10 @@ const App: React.FC = () => {
       };
 
   return (
-    <div className="min-h-screen flex items-start justify-center pt-16 px-4 relative overflow-hidden">
-      {/* Animated gradient background */}
+    <div
+      className={`min-h-screen flex items-start justify-center pt-16 px-4 relative overflow-hidden ${className}`}
+    >
+      {/* Animated gradient background — pure CSS, no JS overhead */}
       <div className="fixed inset-0 -z-10 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 animate-gradient-flow bg-[length:200%_200%]" />
 
       <motion.div
@@ -114,4 +124,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default AnimatedTodoApp;
